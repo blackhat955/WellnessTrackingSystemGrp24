@@ -51,8 +51,12 @@ To run your Node.js project, follow these steps:
    npm start
 
    
-3. *** If the port is already in use:***
+3. ***If the port is already in use:***
    ```bash
+   PORT=4000 npm start
+4.***Pay attention to security warnings during dependency installation:***
+  ```bash
+   npm audit fix
    
 
 
