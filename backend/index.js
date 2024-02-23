@@ -1,62 +1,29 @@
-// // Import required modules
-// const express = require('express');
-
-// const dotenv = require('dotenv').config()
-// const cors = require('cors')
-
-// const mongoose = require('mongoose')
-
-// //Database connection 
-// mongoose.connect(process.env.MONGO_URL)
-// .then(() => console.log('Database Connected'))
-// .catch((err) => console.log('Database is not Connected', err))
-
-// // Create an instance of Express
-// const app = express();
-// // const workoutRoutes = require('./routes/workouts')
-
-// // Middleware
-// app.use(express.json())  
-
-// app.use((req, res, next) => {
-//     console.log(req.path, req.method)
-//     next()
-// })
-
-// // Define routes
-// app.use('/', require('./routes/authRoutes'))
-
-// // Start the server
-// const port = 8001;
-
-
-// app.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-// });
-
-
-// server.js
-
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
+const dotenv = require('dotenv').config();
+const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 5001;
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-// Bodyparser Middleware
-app.use(bodyParser.json());
-
+// Middleware
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  }));
+app.use(bodyParser.json()); // Parse JSON bodies
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://jeetkatariya01970:Jeet%401309%23@cluster0.nambfb0.mongodb.net/?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database Connected'))
+  .catch((err) => console.log('Database is not Connected', err));
 
+// app.use('/', require('./routes/authRoutes'))
 // Routes
-app.use('/api/users', require('./routes/users'));
+app.use('/', require('./routes/authRoutes'));
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// Start the server
+const port = 8100 || process.env.port;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+ 
